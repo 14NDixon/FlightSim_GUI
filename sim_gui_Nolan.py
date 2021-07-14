@@ -7,7 +7,6 @@ import pyqtgraph as pg
 import numpy as np
 import math as m
 
-
 from pyqtgraph.Qt import QtCore, QtGui
 
 class BoomDataGUI:
@@ -143,6 +142,7 @@ class BoomDataGUI:
     def _initialize_near_field_data(self):
         # Reads in data for the near-field pressure signature
 
+        # with open('C:\\Users\\Owner\\AppData\\Roaming\\flightgear.org\\Export\\FlightLog_Waypoints.csv') as input_handle:
         # Read in file
         with open("data/nf_undertrack.txt", 'r') as input_handle:
 
