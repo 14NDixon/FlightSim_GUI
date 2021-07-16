@@ -122,7 +122,6 @@ class BoomDataGUI:
     def start(self):
         """Starts the GUI."""
 
-
         # Set start time
         self._t0 = time.time()
 
@@ -142,19 +141,16 @@ class BoomDataGUI:
     def _initialize_near_field_data(self):
         # Reads in data for the near-field pressure signature
 
-        # with open('C:\\Users\\Owner\\AppData\\Roaming\\flightgear.org\\Export\\FlightLog_Waypoints.csv') as input_handle:
         # Read in file
         with open("data/nf_undertrack.txt", 'r') as input_handle:
-
             # Get lines
             lines = input_handle.readlines()
             N = len(lines)
             self._nf_press_data = np.zeros((N, 2))
             for i in range(N):
                 split_line = lines[i].split()
-                self._nf_press_data[i,0] = float(split_line[0])
-                self._nf_press_data[i,1] = float(split_line[1])
-
+                self._nf_press_data[i, 0] = float(split_line[0])
+                self._nf_press_data[i, 1] = float(split_line[1])
 
     def _initialize_atmos_data(self):
 
