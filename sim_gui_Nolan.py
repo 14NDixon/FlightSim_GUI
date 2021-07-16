@@ -220,10 +220,11 @@ class BoomDataGUI:
     def _initialize_flight_data(self):
 
         # Read in file
-        with open('data/flight_log.csv', 'r') as input_handle:
+        with open('data/flight_log_testnew.csv', 'r') as input_handle:
 
             # Convert from CSV
-            # Columns: Time, Mach, Alpha_D, Altitude, Latitude, Longitude
+            # Columns: Time, AoA,Mach,TempF,TempC,PressureHG,PressureSea,WindN,WindE,WindHead,WindSpeed, ...
+            # Altitude,Heading,HeadingMag,Longitude, Latitude, LocalTime, WaypointNumber
             self._flight_data = np.genfromtxt(input_handle, delimiter=',', skip_header=1)
 
         # Set display options
@@ -329,7 +330,8 @@ class BoomDataGUI:
     def _initialize_flight_plot(self):
 
         # Create altitude plot
-        h_color = "#0000FF"
+        # h_color = "#0000FF"
+        h_color = "#00A6FF"
         self._h_axis = pg.AxisItem('left')
         self._h_axis.setLabel('Altitude', units='m', color=h_color)
         self._h_view = pg.ViewBox()
@@ -543,7 +545,8 @@ class BoomDataGUI:
     
     def _update_flight_plot(self):
         # Updates the flight data plot
-        # Columns: Time, Mach, Alpha_D, Altitude, Latitude, Longitude
+        # Columns: Time, AoA,Mach,TempF,TempC,PressureHG,PressureSea,WindN,WindE,WindHead,WindSpeed, ...
+        # Altitude,Heading,HeadingMag,Longitude, Latitude, LocalTime, WaypointNumber
 
         # Get indices of points to be plotted
         t_curr = time.time()-self._t0
@@ -558,13 +561,13 @@ class BoomDataGUI:
             curr_ind = [0, 1]
 
         # Altitude
-        self._h_curve.setData(self._flight_data[curr_ind,0], self._flight_data[curr_ind,3])
+        self._h_curve.setData(self._flight_data[curr_ind,0], self._flight_data[curr_ind,12])
 
         # Mach number
-        self._M_curve.setData(self._flight_data[curr_ind,0], self._flight_data[curr_ind,1])
+        self._M_curve.setData(self._flight_data[curr_ind,0], self._flight_data[curr_ind,2])
 
         # Angle of attack
-        self._a_curve.setData(self._flight_data[curr_ind,0], self._flight_data[curr_ind,2])
+        self._a_curve.setData(self._flight_data[curr_ind,0], self._flight_data[curr_ind,1])
 
         # Baseline PL dB
         self._pldb_base_curve.setData(self._flight_data[curr_ind,0], 83.0*np.ones_like(curr_ind))
