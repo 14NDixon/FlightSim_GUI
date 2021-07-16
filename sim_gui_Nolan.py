@@ -7,7 +7,6 @@ import pyqtgraph as pg
 import numpy as np
 import math as m
 
-
 from pyqtgraph.Qt import QtCore, QtGui
 
 class BoomDataGUI:
@@ -123,7 +122,6 @@ class BoomDataGUI:
     def start(self):
         """Starts the GUI."""
 
-
         # Set start time
         self._t0 = time.time()
 
@@ -145,16 +143,14 @@ class BoomDataGUI:
 
         # Read in file
         with open("data/nf_undertrack.txt", 'r') as input_handle:
-
             # Get lines
             lines = input_handle.readlines()
             N = len(lines)
             self._nf_press_data = np.zeros((N, 2))
             for i in range(N):
                 split_line = lines[i].split()
-                self._nf_press_data[i,0] = float(split_line[0])
-                self._nf_press_data[i,1] = float(split_line[1])
-
+                self._nf_press_data[i, 0] = float(split_line[0])
+                self._nf_press_data[i, 1] = float(split_line[1])
 
     def _initialize_atmos_data(self):
 
@@ -227,9 +223,13 @@ class BoomDataGUI:
         path_to_export = "C:\\Users\\Owner\\AppData\\Roaming\\flightgear.org\\Export\\"
         # with open('data/flight_log.csv', 'r') as input_handle:
         with open(path_to_export + 'FlightLog_Waypoints.csv', 'r') as input_handle:
+        # Read in file
+        # with open('data/flight_log_testnew.csv', 'r') as input_handle:
+
 
             # Convert from CSV
-            # Columns: Time, Mach, Alpha_D, Altitude, Latitude, Longitude
+            # Columns: Time, AoA,Mach,TempF,TempC,PressureHG,PressureSea,WindN,WindE,WindHead,WindSpeed, ...
+            # Altitude,Heading,HeadingMag,Longitude, Latitude, LocalTime, WaypointNumber
             self._flight_data = np.genfromtxt(input_handle, delimiter=',', skip_header=1)
 
         # Set display options
@@ -335,7 +335,8 @@ class BoomDataGUI:
     def _initialize_flight_plot(self):
 
         # Create altitude plot
-        h_color = "#0000FF"
+        # h_color = "#0000FF"
+        h_color = "#00A6FF"
         self._h_axis = pg.AxisItem('left')
         self._h_axis.setLabel('Altitude', units='m', color=h_color)
         self._h_view = pg.ViewBox()
@@ -549,7 +550,8 @@ class BoomDataGUI:
     
     def _update_flight_plot(self):
         # Updates the flight data plot
-        # Columns: Time, Mach, Alpha_D, Altitude, Latitude, Longitude
+        # Columns: Time, AoA,Mach,TempF,TempC,PressureHG,PressureSea,WindN,WindE,WindHead,WindSpeed, ...
+        # Altitude,Heading,HeadingMag,Longitude, Latitude, LocalTime, WaypointNumber
 
         # Get indices of points to be plotted
         t_curr = time.time()-self._t0
@@ -564,13 +566,13 @@ class BoomDataGUI:
             curr_ind = [0, 1]
 
         # Altitude
-        self._h_curve.setData(self._flight_data[curr_ind,0], self._flight_data[curr_ind,3])
+        self._h_curve.setData(self._flight_data[curr_ind,0], self._flight_data[curr_ind,12])
 
         # Mach number
-        self._M_curve.setData(self._flight_data[curr_ind,0], self._flight_data[curr_ind,1])
+        self._M_curve.setData(self._flight_data[curr_ind,0], self._flight_data[curr_ind,2])
 
         # Angle of attack
-        self._a_curve.setData(self._flight_data[curr_ind,0], self._flight_data[curr_ind,2])
+        self._a_curve.setData(self._flight_data[curr_ind,0], self._flight_data[curr_ind,1])
 
         # Baseline PL dB
         self._pldb_base_curve.setData(self._flight_data[curr_ind,0], 83.0*np.ones_like(curr_ind))
