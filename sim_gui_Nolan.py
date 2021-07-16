@@ -361,7 +361,8 @@ class BoomDataGUI:
                                                    pen=pldb_base_color, brush=pldb_base_color, symbol='d')
 
         # Create optimum PLdB plot
-        pldb_opt_color = "#FF5555"
+        # pldb_opt_color = "#FF5555"
+        pldb_opt_color = "#bd58e8"
         self._pldb_opt_axis = pg.AxisItem('left')
         self._pldb_opt_axis.setLabel('PL (optimum)', units='dB', color=pldb_opt_color)
         self._pldb_opt_view = pg.ViewBox()
