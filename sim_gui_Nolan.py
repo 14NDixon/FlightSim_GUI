@@ -219,8 +219,13 @@ class BoomDataGUI:
 
     def _initialize_flight_data(self):
 
+        # Read in file from FlightGear's Export Folder
+        path_to_export = "C:\\Users\\Owner\\AppData\\Roaming\\flightgear.org\\Export\\"
+        # with open('data/flight_log.csv', 'r') as input_handle:
+        with open(path_to_export + 'FlightLog_Waypoints.csv', 'r') as input_handle:
         # Read in file
-        with open('data/flight_log_testnew.csv', 'r') as input_handle:
+        # with open('data/flight_log_testnew.csv', 'r') as input_handle:
+
 
             # Convert from CSV
             # Columns: Time, AoA,Mach,TempF,TempC,PressureHG,PressureSea,WindN,WindE,WindHead,WindSpeed, ...
