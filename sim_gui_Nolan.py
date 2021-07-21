@@ -8,15 +8,17 @@ import numpy as np
 import math as m
 
 from pyqtgraph.Qt import QtCore, QtGui
+from PyQt5 import QtWidgets
 
 
 class BoomDataGUI:
     """A sonic boom data visualization GUI"""
 
-    def __init__(self):
+    def __init__(self, data_array):
 
         # Options
         self._framerate = 50
+        self._data = data_array
 
         # Set pyqtgraph options
         pg.setConfigOption('background', 'k')
@@ -216,7 +218,7 @@ class BoomDataGUI:
     def _initialize_flight_data(self):
 
         # Read in file from FlightGear's Export Folder
-        path_to_export = "C:\\Users\\Owner\\AppData\\Roaming\\flightgear.org\\Export\\"
+        path_to_export = "C:\\Users\\Nolan Dixon\\AppData\\Roaming\\flightgear.org\\Export\\"
         # with open('data/flight_log.csv', 'r') as input_handle:
         with open(path_to_export + 'FlightLog_Waypoints.csv', 'r') as input_handle:
             # Read in file
@@ -593,5 +595,7 @@ class BoomDataGUI:
 
 if __name__ == "__main__":
     # Initialize GUI and run
-    gui = BoomDataGUI()
+    data_array = Array('d', 100000)
+    tcp_process = Process(target=tcp_function, args=(data_array,))
+    gui = BoomDataGUI(data_array)
     gui.start()
