@@ -567,7 +567,7 @@ class BoomDataGUI:
             curr_ind = [0, 1]
 
         # Altitude
-        self._h_curve.setData(self._flight_data[curr_ind,0], self._flight_data[curr_ind,12])
+        self._h_curve.setData(self._flight_data[curr_ind,0], self._flight_data[curr_ind,11])
 
         # Mach number
         self._M_curve.setData(self._flight_data[curr_ind,0], self._flight_data[curr_ind,2])
